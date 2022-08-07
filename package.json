@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/mykolamatviienko/myFuelMap/issues"
   },
-  "homepage": "https://github.com/mykolamatviienko/myFuelMap#readme"
+  "homepage": "https://github.com/mykolamatviienko/myFuelMap#readme",
+  "dependencies": {
+    "bootstrap": "^5.2.0",
+    "express": "^4.18.1"
+  }
 }
