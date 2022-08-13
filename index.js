@@ -1,18 +1,18 @@
-// import express (after npm install express)
-const express = require('express');
-
-// create new express app and save it as "app"
+const express = require("express");
+const path = require("path");
 const app = express();
+const router = express.Router();
+const PORT = 3000;
 
-// server configuration
-const PORT = 8080;
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-// create a route for the app
-app.get('/', (req, res) => {
-  res.send('homePage.html');
+router.get("/", (req, res) => {
+  res.render("homePage");
 });
 
 // make the server listen to requests
+app.use("/", router);
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);
 });
