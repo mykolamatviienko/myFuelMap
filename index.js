@@ -25,23 +25,50 @@ app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);
 });
 
-let temp = null;
-getDataFromDatabase(myDatabaseAddressObject, temp);
+showDataOnPage();
 
-function getDataFromDatabase(connectionParametersObject, dataFromDB) {
-  const connection = mysql.createConnection(connectionParametersObject);
-  connection.connect(function (err) {
-    if (err) {
-      return console.error("Ошибка: " + err.message);
-    } else {
-      console.log("Подключение к серверу MySQL успешно установлено");
-    }
-  });
-  connection.query("SELECT * FROM refueling_list", (err, rows) => {
-    if (err) throw err;
+function getDataFromDatabase(connectionParametersObject) {
+  return new Promise((resolve, reject) => {
+    const connection = mysql.createConnection(connectionParametersObject);
+    connection.connect(function (err) {
+      if (err) {
+        return console.error("Ошибка: " + err.message);
+      } else {
+        console.log("Подключение к серверу MySQL успешно установлено");
+      }
+    });
+    connection.query("SELECT * FROM refueling_list", (err, rows) => {
+      if (err) throw err;
+      console.log("Data received from Db:");
+      //console.log(rows);
+      resolve(rows);
+    });
 
-    dataFromDB = rows;
-    console.log("Data received from Db:");
-    console.log(rows);
+    connection.end();
   });
+}
+
+function createDataTable(arrEl) {
+  let table = document.querySelector(".my-tbody");
+  const tableRowElem = document.createElement("tr");
+  tableRowElem.innerHTML = `<th scope="row">${arrEl.serial_number}</th>`;
+  table.appendChild(tableRowElem);
+}
+
+function showDataOnPage() {
+  let dataFromDb = null;
+  getDataFromDatabase(myDatabaseAddressObject)
+    .then((data) => {
+      dataFromDb = data;
+      data.forEach((element) => {
+        createDataTable(element);
+      });
+    })
+    .catch(function (err) {
+      console.log(err); //Здесь будет ошибка в случае чего
+    });
+
+  // arr.forEach((el) => {
+  //   createDataTable(el);
+  // });
 }
