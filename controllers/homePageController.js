@@ -5,6 +5,4 @@ const homePageView = (req, res) => {
   res.render("homePage", {});
 };
 
-module.exports = {
-  homePageView,
-};
+module.exports = homePageView;
