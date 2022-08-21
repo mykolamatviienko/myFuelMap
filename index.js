@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const router = express.Router();
+//const router = express.Router();
 const PORT = 3000;
 const mysql = require("mysql2");
 const myDatabaseAddressObject = {
@@ -15,12 +15,12 @@ const myDatabaseAddressObject = {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-router.get("/", (req, res) => {
-  res.render("homePage");
-});
+// router.get("/", (req, res) => {
+//   res.render("homePage");
+// });
 
 // make the server listen to requests
-app.use("/", router);
+app.use("/", require("./routes/homePage"));
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);
 });
