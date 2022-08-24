@@ -1,8 +1,16 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-//const router = express.Router();
-const PORT = 3000;
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
+// Mongo DB conncetion
+const database = process.env.MONGOLAB_URI;
+mongoose
+  .connect(database, { useUnifiedTopology: true, useNewUrlParser: true })
+  .then(() => console.log("e don connect"))
+  .catch((err) => console.log(err));
+const PORT = process.env.PORT || 3000;
 const mysql = require("mysql2");
 const myDatabaseAddressObject = {
   host: "localhost",
@@ -20,12 +28,14 @@ app.set("views", path.join(__dirname, "views"));
 // });
 
 // make the server listen to requests
-app.use("/", require("./routes/homePage"));
+app.use("/", require("./routes/login"));
+//BodyParsing
+app.use(express.urlencoded({ extended: false }));
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);
 });
 
-showDataOnPage();
+//showDataOnPage();
 
 function getDataFromDatabase(connectionParametersObject) {
   return new Promise((resolve, reject) => {
