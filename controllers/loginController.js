@@ -16,7 +16,11 @@ const registerView = (req, res) => {
 
 //Post Request that handles Register
 const registerUser = (req, res) => {
-  const { name, email, location, password, confirm } = req.body;
+  const name = req.body.name;
+  const email = req.body.email;
+  const location = req.body.location;
+  const password = req.body.password;
+  const confirm = req.body.confirm;
   if (!name || !email || !password || !confirm) {
     console.log("Fill empty fields");
   }
