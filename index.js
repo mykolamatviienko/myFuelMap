@@ -22,15 +22,12 @@ const myDatabaseAddressObject = {
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-
-// router.get("/", (req, res) => {
-//   res.render("homePage");
-// });
+//BodyParsing
+app.use(express.urlencoded({ extended: false }));
 
 // make the server listen to requests
 app.use("/", require("./routes/login"));
-//BodyParsing
-app.use(express.urlencoded({ extended: false }));
+
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);
 });
