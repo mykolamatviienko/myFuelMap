@@ -1,9 +1,21 @@
 const express = require("express");
 const path = require("path");
 const app = express();
+const session = require("express-session");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
+app.use(
+  session({
+    secret: "oneboy",
+    saveUninitialized: true,
+    resave: true,
+  })
+);
+const passport = require("passport");
+const { loginCheck } = require("./auth/passport");
+loginCheck(passport);
+
 // Mongo DB conncetion
 const database = process.env.MONGOLAB_URI;
 mongoose
@@ -24,6 +36,9 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 //BodyParsing
 app.use(express.urlencoded({ extended: false }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // make the server listen to requests
 app.use("/", require("./routes/login"));
