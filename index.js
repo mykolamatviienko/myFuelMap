@@ -81,10 +81,11 @@ function showDataOnPage() {
   let dataFromDb = null;
   getDataFromDatabase(myDatabaseAddressObject)
     .then((data) => {
-      dataFromDb = data;
-      data.forEach((element) => {
-        createDataTable(element);
-      });
+      console.log(data);
+      // dataFromDb = data;
+      // data.forEach((element) => {
+      //   createDataTable(element);
+      // });
     })
     .catch(function (err) {
       console.log(err); //Здесь будет ошибка в случае чего

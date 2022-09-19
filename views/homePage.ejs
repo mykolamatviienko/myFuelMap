@@ -25,7 +25,7 @@
         <img href="#" class="navbar-brand">
         <img src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="logo">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        <button class="navbar-toggler" type="button" mass-toggle="collapse" mass-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -61,6 +61,31 @@
                         </tr>
                     </thead>
                     <tbody class="my-tbody">
+                        <% for (let i=0; i < mass.length; i++) { %>
+                            <tr>
+                                <th>
+                                    <%= i %>
+                                </th>
+                                <td>
+                                    <%= mass[i].date %>
+                                </td>
+                                <td>
+                                    <%= mass[i].car_mileage %>
+                                </td>
+                                <td>
+                                    <%= mass[i].liters %>
+                                </td>
+                                <td>
+                                    <%= mass[i].price %>
+                                </td>
+                                <td>
+                                    <%= mass[i]['to_full?'] %>
+                                </td>
+                                <td>
+                                    <%= mass[i].cost %>
+                                </td>
+                            </tr>
+                            <% } %>
                     </tbody>
             </div>
         </div>

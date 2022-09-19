@@ -2,9 +2,19 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const mysql = require("mysql2");
+const myDatabaseAddressObject = {
+  host: "localhost",
+  port: "3306",
+  user: "root",
+  database: "myfuelmapdb",
+  password: "admin",
+};
 //For Home Page
 const homePageView = (req, res) => {
-  res.render("homePage", {});
+  getDataFromDatabase(myDatabaseAddressObject).then((data) => {
+    res.render("homePage", { mass: data });
+  });
 };
 
 const loginView = (req, res) => {
@@ -79,6 +89,37 @@ const loginUser = (req, res) => {
     })(req, res);
   }
 };
+function showDataOnPage() {
+  let dataFromDb = null;
+  getDataFromDatabase(myDatabaseAddressObject)
+    .then((data) => {
+      //console.log(data);
+    })
+    .catch(function (err) {
+      console.log(err); //Здесь будет ошибка в случае чего
+    });
+}
+async function getDataFromDatabase(connectionParametersObject) {
+  return new Promise((resolve, reject) => {
+    const connection = mysql.createConnection(connectionParametersObject);
+    connection.connect(function (err) {
+      if (err) {
+        return console.error("Ошибка: " + err.message);
+      } else {
+        console.log("Подключение к серверу MySQL успешно установлено");
+      }
+    });
+    connection.query("SELECT * FROM refueling_list", (err, rows) => {
+      if (err) throw err;
+      console.log("Data received from Db:");
+      //console.log(rows);
+      resolve(rows);
+    });
+
+    connection.end();
+  });
+}
+
 module.exports = {
   homePageView,
   loginView,
