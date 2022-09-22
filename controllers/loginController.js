@@ -13,6 +13,10 @@ const myDatabaseAddressObject = {
 //For Home Page
 const homePageView = (req, res) => {
   getDataFromDatabase(myDatabaseAddressObject).then((data) => {
+    data.forEach((val) => {
+      val.date = val.date.toDateString();
+    });
+    console.log(parseInt(data[0].liters, 10));
     res.render("homePage", { mass: data });
   });
 };
@@ -99,7 +103,7 @@ function showDataOnPage() {
       console.log(err); //Здесь будет ошибка в случае чего
     });
 }
-async function getDataFromDatabase(connectionParametersObject) {
+function getDataFromDatabase(connectionParametersObject) {
   return new Promise((resolve, reject) => {
     const connection = mysql.createConnection(connectionParametersObject);
     connection.connect(function (err) {

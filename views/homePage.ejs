@@ -64,7 +64,7 @@
                         <% for (let i=0; i < mass.length; i++) { %>
                             <tr>
                                 <th>
-                                    <%= i %>
+                                    <%= i+1 %>
                                 </th>
                                 <td>
                                     <%= mass[i].date %>
@@ -84,6 +84,16 @@
                                 <td>
                                     <%= mass[i].cost %>
                                 </td>
+                                <% if (mass[i-1]){ %>
+                                    <td>
+                                        <%= parseInt(mass[i].liters, 10) / (mass[i].car_mileage - mass[i-1].car_mileage)
+                                            * 100 %>
+                                    </td>
+                                    <%} else { %>
+                                        <td>
+                                            <%= "-" %>
+                                        </td>
+                                        <% } %>
                             </tr>
                             <% } %>
                     </tbody>
