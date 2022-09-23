@@ -86,8 +86,8 @@
                                 </td>
                                 <% if (mass[i-1]){ %>
                                     <td>
-                                        <%= parseInt(mass[i].liters, 10) / (mass[i].car_mileage - mass[i-1].car_mileage)
-                                            * 100 %>
+                                        <%= (parseInt(mass[i].liters, 10) / (mass[i].car_mileage -
+                                            mass[i-1].car_mileage) * 100).toFixed(2) %>
                                     </td>
                                     <%} else { %>
                                         <td>
